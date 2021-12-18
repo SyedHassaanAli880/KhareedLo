@@ -1,0 +1,53 @@
+﻿@model KhareedLo.ViewModel.ReviewsAndComment.GetReviewsViewModel
+
+<h2>Customer Reviews</h2>
+
+@foreach (var grvc in Model.ReviewsAndComments)
+{
+
+    if (grvc.ProductId == UserClass.currentProdID)
+    {
+        <div class="media">
+            <div class="media-body">
+                <h3>Posted By:</h3>
+                <h4>
+                    @grvc.Name
+                </h4>
+                <h3>Comment:</h3>
+                <h4>
+                    @grvc.Comment
+                </h4>
+                
+                    <form method="post"  asp-action="DeleteReviews" asp-controller="ReviewsAndComments" asp-route-Id="@grvc.Id">
+                        <button type="submit" class="btn btn-danger">delete</button>
+                    </form>
+            </div>
+        </div>
+    }
+
+
+}
+
+@if (UserClass.name != "admin")
+{
+   
+
+            <hr />
+            <form method="post" asp-action="GetReviews" asp-controller="ReviewsAndComments">
+
+                <div class="form-group">
+
+                    <label for="comment">Your comment:</label>
+
+                    <textarea class="form-control" id="comment" name="comment" rows="5" placeholder="Write your comment here:" required>
+
+                    </textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+                <button type="reset" class="btn btn-success">Clear</button>
+            </form>
+        
+
+}

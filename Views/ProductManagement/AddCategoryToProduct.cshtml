@@ -1,0 +1,14 @@
+﻿@model ProductCategoryViewModel
+
+<h2>Add Product to Category</h2>
+
+
+<form asp-controller="ProductManagement" asp-action="AddCategoryToProduct" method="post" class="form-horizontal">
+    <input type="hidden" name="ProductId" value="@Model.ProductId" />
+    <select asp-for="CategoryName" asp-items="@(new SelectList(Model.categories,"Id","Name"))">
+        <option>Please select a category</option>
+    </select>
+    <input class="btn btn-primary" value="Add to Product" type="submit" />
+</form>
+
+<a asp-controller="ProductManagement" asp-action="HomeListOfProducts" class="btn btn-primary">Done</a>

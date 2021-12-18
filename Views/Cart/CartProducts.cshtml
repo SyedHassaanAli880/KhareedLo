@@ -1,0 +1,78 @@
+﻿@model CheckOutViewModel
+@{ 
+    Layout = null;
+}
+<style>
+    .styleheading {
+        background-color: black;
+        color: white;
+        text-align: center;
+    }
+</style>
+
+@if (Model != null)
+ {
+    if (Model.CartProducts != null && Model.CartProducts.Count > 0)
+    {
+        <table class="table table-condensed" style="margin-top:1%;">
+
+            <tr class="styleheading">
+                <th>ID</th>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </tr>
+
+            @{ var count = 0; var ttb = 0;}
+
+            @foreach (var productt in Model.CartProducts)
+            {
+
+                <tr>
+                    @{++count; }
+                    <td class="col-md-1">@count</td>
+                    <td class="col-md-1">
+                        <img src="~/images/@productt.ImagePhoto" alt="" style="height:90px; width:110px;" />
+                    </td>
+                    @*<td class="col-md-1">@productt.Id</td>*@
+                    <td class="col-md-1">@productt.Name</td>
+                    <td class="col-md-1">@productt.Price</td>
+
+                    <td class="col-md-1">
+                        @{var productQuanity = Model.CartProductIDs.Where(prodID => prodID == productt.Id).Count();
+                        }
+                        @productQuanity
+                    </td>
+                    <td class="col-md-1">
+                        @{var mult = @productQuanity * @productt.Price;
+                        }
+
+                        @mult
+                    </td>
+                    <td class="col-md-1">
+                        <form asp-controller="ProductManagement" asp-action="DeleteProduct" asp-route-id="@productt.Id" method="post">
+                            <button type="submit" onclick="return confirm('Are you sure?');" class="btn btn-sm btn-danger col-md-12">Delete</button>
+                        </form>
+                    </td>
+                    @{ ttb = ttb + Convert.ToInt32(mult);}
+                </tr>
+             }
+
+
+        </table>
+        <hr />
+        <div>
+            <h3>Total Bill:@ttb</h3>
+        </div>
+    }
+    else
+    {
+        <div>
+            No products in the cart.
+        </div>
+    }
+ }
+

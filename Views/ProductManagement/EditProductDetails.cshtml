@@ -1,0 +1,82 @@
+﻿@model KhareedLo.Models.Products
+
+<h2>EDIT PRODUCT DETAILS</h2>
+
+<form asp-controller="ProductManagement" asp-action="EditProductDetails" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data" class="form-horizontal">
+    <h4>You can change the product details below</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+    <div class="form-group">
+        <label asp-for="Name" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ShortDescription" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="ShortDescription" class="form-control" />
+            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LongDescription" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="LongDescription" class="form-control" />
+            <span asp-validation-for="LongDescription" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <img src="~/images/@Model.ImagePhoto" style="height:200px; width:200px;"/>
+        
+                <input type="file" name="ImagePhoto"/>
+            <span asp-validation-for="ImagePhoto" class="text-danger"></span>
+     </div>   
+
+    
+    <div class="form-group">
+        <label asp-for="ImagePhoto" class="col-md-2 control-label"></label>
+        <div class="custom-file">
+            <input name="ImagePhoto" asp-for="ImagePhoto" class="custom-file-input" id="customeFile" />
+            <label class="custom-file-label" for="customeFile">Choose Image</label>
+        </div>
+        <span asp-validation-for="ImagePhoto" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="IsInStock" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="IsInStock" class="form-control" />
+            <span asp-validation-for="IsInStock" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Quantity" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Quantity" class="form-control" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input asp-controller="ProductManagement" asp-action="EditProductDetails" asp-route-id="@Model.Id" type="submit" class="btn btn-primary" value="Save" />
+        </div>
+    </div>
+</form> 

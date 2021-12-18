@@ -1,0 +1,92 @@
+﻿@model Products
+
+    <h2>@Model.Name</h2>
+
+    <div>
+        <img alt="" width="230" height="120" src="~/images/@Model.ImagePhoto" />
+        <div class="caption-full">
+            <h3 class="pull-right">PRICE: Rs. @Model.Price</h3>
+            <h4>SHORT DESCRIPTION:@Model.ShortDescription</h4>
+            <h4>LONG DESCRIPTION: @Model.LongDescription</h4>
+        </div>
+    </div>
+
+    <table class="table table-condensed table-bordered" style="margin-top:1%;">
+
+        <tr>
+            <th>AVAILABILITY</th>
+            
+            <th style="text-align:center">ACTION</th>
+        </tr>
+
+        <tr>
+            @if (Model.IsInStock == true)
+            {
+                <td class="col-md-2 success">In stock</td>
+
+            }
+            else //not in stock
+            {
+                <td class="col-md-1 danger">Out of stock</td>
+            }
+
+            <td style="text-align:center">
+                <button data-id="@Model.Id" class="addToCart">Add to cart</button>
+            </td>
+
+        </tr>
+
+
+    </table>
+
+    @{
+        if(UserClass.name == "admin")
+        {
+            <a class="btn btn-block btn-info" asp-action="GetReviews" asp-controller="ReviewsAndComments" asp-route-id="@Model.Id">
+                View Reviews
+            </a>
+        }
+        else
+        {
+            <a class="btn btn-block btn-info" asp-action="GetReviews" asp-controller="ReviewsAndComments" asp-route-id="@Model.Id">
+                Add Reviews
+            </a>
+        }
+    }
+    
+    <script type="text/javascript">
+       
+        var products = [];
+
+        $(".addToCart").click(function () {
+
+            var existcook;
+
+            var cookiesArray = document.cookie.split(";");
+
+            for (var i = 0; i < cookiesArray.length; ++i) {
+                var ValueArray = cookiesArray[i].split("=");
+                if (ValueArray[0].trim() == 'cartprods') {
+                    existcook = ValueArray[1];
+                }
+            }
+
+            if (existcook != undefined && existcook != "" && existcook != null) {
+                products = existcook.split("-");
+            }
+            else {
+                products = [];
+            }
+
+            var productID = $(this).attr("data-id");
+
+            products.push(productID);
+            var expires = " expires=Sat, 01 Jan 2022 00:00:00 UTC";
+            var prods = products.join("-");
+            document.cookie = "cartprods=" + prods + ";" + expires + "; path=/";
+            alert('Successfully added to cart!');
+
+            $("#CartProductsCount").html("Cart(" + products.length + ")");
+
+        });
+    </script>

@@ -1,0 +1,27 @@
+﻿@model ProductViewModel
+
+@if (Convert.ToBoolean(TempData["OrderPlaced"]) == true)
+{
+    <div class="alert alert-success alert-dismissable" role="alert">
+        Product added successfully!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@foreach (var products in Model.Products)
+{
+    <div class="col-sm-4 col-lg-4 col-md-4">
+        <div class="thumbnail">
+            <img src="~/images/@products.ImagePhoto" alt="" width="130" height="120" />
+            <div class="caption">
+                <h3 class="pull-right">@products.Price.ToString("c")</h3>
+                <h3><a asp-controller="Product" asp-action="Details" asp-route-id="@products.Id">@products.Name</a></h3>
+                <h3>@products.ShortDescription</h3>
+            </div>
+        </div>
+    </div>
+}
+
+

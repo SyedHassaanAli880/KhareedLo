@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System;
+@model ProductViewModel
+<style>
+    .styleheading {
+        background-color: black;
+        color: white;
+        text-align: center;
+    }
+</style>
+
+@if (Convert.ToBoolean(TempData["IsSuccess"]) == true)
+ {
+    <div class="alert alert-success alert-dismissable" role="alert">
+        Product added successfully!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+ }
+
+<h2>PRODUCT MANAGEMENT </h2>
+<a class="btn btn-sm btn-primary" asp-controller="ProductManagement" asp-action="AddProduct">Add new product</a>
+
+<table class="table table-borderless" style="margin-top:1%;">
+
+    <tr class="styleheading">
+        <th >ID</th>
+        <th >NAME</th>
+        <th >IMAGE</th>
+        <th >PRICE</th>
+        <th >IN STOCK</th>
+        <th >TOTAL QUANTITY</th>
+        <th >SHORT DESCRIPTION</th>
+        <th >LONG DESCRIPTION</th>
+        <th >CATEGORY</th>
+        <th >ACTIONS</th>
+    </tr>
+
+    @foreach (var product in Model.Products)
+    {
+        <tr>
+            <td>@product.Id</td>
+            <td class="col-md-1">@product.Name</td>
+            <td class="col-md-1">
+                <img src="~/images/@product.ImagePhoto" alt="" style="height:120px; width:150px;" />
+            </td>
+            <td class="col-md-1">@product.Price.ToString("c")</td>
+            <td class="col-md-1">@product.IsInStock</td>
+            <td class="col-md-1">@product.Quantity</td>
+            <td class="col-md-1">@product.ShortDescription</td>
+            <td class="col-md-2">@product.LongDescription</td>
+            <td class="col-md-1">@product.Category</td>
+            <td>
+                <a class="btn btn-sm btn-primary col-md-6" asp-controller="ProductManagement" asp-action="EditProductDetails" asp-route-id="@product.Id">Edit</a>
+                <form asp-controller="ProductManagement" asp-action="DeleteProduct" asp-route-id="@product.Id" method="post">
+                    <button type="submit" onclick="return confirm('Are you sure?');" class="btn btn-sm btn-danger col-md-6">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+     }
+
+</table>

@@ -1,0 +1,30 @@
+﻿@model DisplayFeedbackViewModel
+<style>
+    .styleheading {
+        background-color: black;
+        color: white;
+        text-align: center;
+    }
+</style>
+
+<table class="table table-borderless" style="margin-top:1%;">
+
+    <tr class="styleheading">
+        <th>ID</th>
+        <th>NAME</th>
+        <th>EMAIL</th>
+        <th>FEEDBACK</th>
+    </tr>
+
+    @foreach (var obj in Model.fbs)
+     {
+        <tr>
+            <td class="col-md-1">@obj.FeedbackId</td>
+            <td class="col-md-1">@obj.Name</td>
+            <td class="col-md-1">@obj.Email</td>
+            <td class="col-md-1">@obj.Message</td>
+        </tr>
+
+     }
+
+</table>
