@@ -17,6 +17,6 @@ namespace KhareedLo.Models
         public DbSet<Feedbacks> Feedbacks { get; set; }
         public DbSet<CategoryModel> CategoryModels { get; set; }
         public DbSet<ReviewsAndComment> ReviewsAndComments { get; set; }
-        public DbSet<ExternalUser> ExternalUsers { get; set; }
+        //public DbSet<ExternalUser> ExternalUsers { get; set; }
     }
 }

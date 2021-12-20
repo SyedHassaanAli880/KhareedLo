@@ -9,16 +9,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace KhareedLo.Controllers
 {
     //[Authorize(Roles = "Administrators")]
     //[Authorize(Policy = "DeleteProduct")]
-    //[Authorize(Policy = "AddPie")]
     public class ProductManagementController : Controller
     {
         private readonly IProductRepository _productRepository;
@@ -152,7 +149,7 @@ namespace KhareedLo.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProductDetails(int id ,Products vari, IFormFile file)
+        public IActionResult EditProductDetails(int id ,Products vari/*, IFormFile file*/)
         {
             if (ModelState.IsValid)
             {
@@ -162,16 +159,16 @@ namespace KhareedLo.Controllers
 
                 try
                 {
-                    if (file != null)
+                    if (/*file != null*/false)
                     {
-                        string filename = System.Guid.NewGuid().ToString() + ".jpg";
+                        //string filename = System.Guid.NewGuid().ToString() + ".jpg";
 
-                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);
+                        //var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);
 
-                        using (var stream = new FileStream(path, FileMode.Create))
-                        {
-                            file.CopyToAsync(stream);
-                        }
+                        //using (var stream = new FileStream(path, FileMode.Create))
+                        //{
+                        //    file.CopyToAsync(stream);
+                        //}
 
                         prod.Name = vari.Name;
                         prod.IsInStock = vari.IsInStock;
@@ -179,7 +176,7 @@ namespace KhareedLo.Controllers
                         prod.ShortDescription = vari.ShortDescription;
                         prod.Price = vari.Price;
                         prod.Quantity = vari.Quantity;
-                        prod.ImagePhoto = filename;
+                        //prod.ImagePhoto = filename;
                         _appdbcontext.SaveChanges();
                         return RedirectToAction("HomeListOfProducts", "ProductManagement");
 
@@ -193,7 +190,7 @@ namespace KhareedLo.Controllers
                         prod.ShortDescription = vari.ShortDescription;
                         prod.Price = vari.Price;
                         prod.Quantity = vari.Quantity;
-                        prod.ImagePhoto = vari.ImagePhoto;
+                        //prod.ImagePhoto = vari.ImagePhoto;
                         _appdbcontext.SaveChanges();
                         return RedirectToAction("HomeListOfProducts", "ProductManagement");
 
