@@ -17,8 +17,8 @@ namespace KhareedLo
 
         int AddProduct(Products vari);
 
-        bool UpdateProduct(int id, Products vari);
+        Products UpdateProduct(int id, Products vari);
 
-        bool DeleteProduct(int ID);
+        void DeleteProduct(int ID);
     }
 }

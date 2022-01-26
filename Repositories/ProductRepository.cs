@@ -1,10 +1,5 @@
-﻿using KhareedLo.ViewModel;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace KhareedLo.Models
 {
@@ -41,7 +36,7 @@ namespace KhareedLo.Models
             return x;
         }
 
-        public bool UpdateProduct(int id, Products vari)
+        public Products UpdateProduct(int id, Products obj)
         {  
             var prod = _appDbContext.Products.FirstOrDefault(x => x.Id == id);
             
@@ -63,27 +58,37 @@ namespace KhareedLo.Models
 
                     //}
 
-                    Products p = new Products
-                    {
-                        Name = vari.Name,
-                        ShortDescription = vari.ShortDescription,
-                        LongDescription = vari.LongDescription,
-                        Price = vari.Price,
-                        IsInStock = vari.IsInStock,
-                        Quantity = vari.Quantity,
-                        
-                        //ImagePhoto = uniqueFileName
-                    };
 
-                    return true;
+                    prod.Name = obj.Name;
+                    prod.ShortDescription = obj.ShortDescription;
+                    prod.LongDescription = obj.LongDescription;
+                    prod.Price = obj.Price;
+                    prod.IsInStock = obj.IsInStock;
+                    prod.Quantity = obj.Quantity;
+
+                    //ImagePhoto = uniqueFileName
+
+
+                    //Products p = new Products
+                    //{
+                    //    Name = vari.Name,
+                    //    ShortDescription = vari.ShortDescription,
+                    //    LongDescription = vari.LongDescription,
+                    //    Price = vari.Price,
+                    //    IsInStock = vari.IsInStock,
+                    //    Quantity = vari.Quantity,
+
+                    //    //ImagePhoto = uniqueFileName
+                    //};
+
+                    _appDbContext.SaveChanges();
                 }
             }
 
-
-            return false;
+            return prod;
         }
 
-        public bool DeleteProduct(int ID)
+        public void DeleteProduct(int ID)
         {
             var prod = _appDbContext.Products.FirstOrDefault(x=>x.Id == ID);
             
@@ -92,12 +97,7 @@ namespace KhareedLo.Models
                 _appDbContext.Remove(prod);
 
                 _appDbContext.SaveChanges();
-
-                return true;
             }
-            
-
-            return false;
         }
     }
 }

@@ -125,17 +125,9 @@ namespace KhareedLo.Controllers
         [HttpPost]
         public IActionResult DeleteProduct(int ID)
         {
-            bool result = _productRepository.DeleteProduct(ID);
+            _productRepository.DeleteProduct(ID);
 
-            if(result)
-            {
-                return RedirectToAction("HomeListOfProducts", "ProductManagement");
-            }
-            else
-            {
-                return RedirectToAction("HomeListOfProducts", "ProductManagement");
-            }
-            
+            return RedirectToAction("HomeListOfProducts", "ProductManagement");
         }
 
         [HttpGet]

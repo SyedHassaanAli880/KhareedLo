@@ -54,6 +54,8 @@ namespace KhareedLo
 
             services.AddScoped<SignInManager<LoginViewModel>>();
 
+            services.AddControllers().AddNewtonsoftJson();
+
             //services.AddIdentity<IdentityUser, IdentityRole>()    
             //    .AddEntityFrameworkStores<AppDbContext>();
 
