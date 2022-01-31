@@ -2,13 +2,12 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using KhareedLo.Repositories;
 using Microsoft.AspNetCore.Identity;
 using KhareedLo.Repositories.Interfaces;
 using KhareedLo.Models;
 using KhareedLo.ViewModel.Category;
-using KhareedLo.Models.Category;
 using KhareedLo.ViewModel;
+using System.Collections.Generic;
 
 namespace KhareedLo.Controllers
 {
@@ -136,93 +135,147 @@ namespace KhareedLo.Controllers
         [HttpGet]
         public IActionResult LaptopProductsPage()
         {
+            List<ProductViewModel> model = new List<ProductViewModel>();
+
             var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
 
-            var obj = new ProductViewModel()
+            foreach (var b in pproducts)
             {
-                Title = "Products Shop",
+                ProductViewModel product = new ProductViewModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Price = b.Price,
+                    CategoryId = b.CategoryId,
+                    CategoryName = b.Category.Name
 
-                Products = pproducts.ToList()
-            };
+                };
+                model.Add(product);
+            }
 
-            return View(obj);
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult AllInOnePCsPage()
         {
+            List<ProductViewModel> model = new List<ProductViewModel>();
+
             var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
 
-            var obj = new ProductViewModel()
+            foreach (var b in pproducts)
             {
-                Title = "Products Shop",
+                ProductViewModel product = new ProductViewModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Price = b.Price,
+                    CategoryId = b.CategoryId,
+                    CategoryName = b.Category.Name
 
-                Products = pproducts.ToList()
-            };
+                };
+                model.Add(product);
+            }
 
-            return View(obj);
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult BakeryItemsPage()
         {
 
+            List<ProductViewModel> model = new List<ProductViewModel>();
+
             var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
 
-            var obj = new ProductViewModel()
+            foreach (var b in pproducts)
             {
-                Title = "Products Shop",
+                ProductViewModel product = new ProductViewModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Price = b.Price,
+                    CategoryId = b.CategoryId,
+                    CategoryName = b.Category.Name
 
-                Products = pproducts.ToList()
-            };
+                };
+                model.Add(product);
+            }
 
-            return View(obj);
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult BeautyCreamsPage()
         {
 
+            List<ProductViewModel> model = new List<ProductViewModel>();
+
             var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
 
-            var obj = new ProductViewModel()
+            foreach (var b in pproducts)
             {
-                Title = "Products Shop",
+                ProductViewModel product = new ProductViewModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Price = b.Price,
+                    CategoryId = b.CategoryId,
+                    CategoryName = b.Category.Name
 
-                Products = pproducts.ToList()
-            };
+                };
+                model.Add(product);
+            }
 
-            return View(obj);
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult ComputerCompsPage()
         {
+            List<ProductViewModel> model = new List<ProductViewModel>();
+
             var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
 
-            var obj = new ProductViewModel()
+            foreach (var b in pproducts)
             {
-                Title = "Products Shop",
+                ProductViewModel product = new ProductViewModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Price = b.Price,
+                    CategoryId = b.CategoryId,
+                    CategoryName = b.Category.Name
 
-                Products = pproducts.ToList()
-            };
+                };
+                model.Add(product);
+            }
 
-            return View(obj);
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult ClothesPage()
         {
+            List<ProductViewModel> model = new List<ProductViewModel>();
+
             var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
 
-            var obj = new ProductViewModel()
+            foreach (var b in pproducts)
             {
-                Title = "Products Shop",
+                ProductViewModel product = new ProductViewModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Price = b.Price,
+                    CategoryId = b.CategoryId,
+                    CategoryName = b.Category.Name
 
-                Products = pproducts.ToList()
-            };
+                };
+                model.Add(product);
+            }
 
-            return View(obj);
+            return View(model);
         }
     }
 }

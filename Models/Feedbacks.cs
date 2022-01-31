@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations;
 
 namespace KhareedLo.Models
@@ -10,13 +8,13 @@ namespace KhareedLo.Models
         [Key]
         public int FeedbackId { get; set; }
 
-        [Required]
-        [StringLength(100,ErrorMessage = "Your name is required.")]
+        //[Required]
+        //[StringLength(100,ErrorMessage = "Your name is required.")]
         public string Name { get; set; }
 
         
-        [Required(ErrorMessage = "Your email is required.")]
-        [DataType(DataType.EmailAddress)]
+        //[Required(ErrorMessage = "Your email is required.")]
+        //[DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         

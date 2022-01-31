@@ -1,6 +1,4 @@
-﻿using KhareedLo.Models.Category;
-using KhareedLo.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +11,7 @@ namespace KhareedLo.Models
 
         }
 
-        public DbSet<Products> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Feedbacks> Feedbacks { get; set; }
         public DbSet<CategoryModel> CategoryModels { get; set; }
         public DbSet<ReviewsAndComment> ReviewsAndComments { get; set; }

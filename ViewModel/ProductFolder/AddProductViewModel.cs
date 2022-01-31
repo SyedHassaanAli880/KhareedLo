@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using KhareedLo.Models.Category;
+using KhareedLo.Models;
 
 namespace KhareedLo.ViewModel.Product
 {
@@ -38,9 +38,8 @@ namespace KhareedLo.ViewModel.Product
         [Display(Name = "Choose Image")]
         public IFormFile ImagePhoto { get; set; }
 
-        ///*[Required]*/
         [Display(Name = "Select Category")]
-        public List<CategoryModel> categories { get; set; }
+        public CategoryModel CategoryName { get; set; }
 
     }
 }

@@ -1,23 +1,19 @@
 ﻿using KhareedLo.Models;
-using KhareedLo.ViewModel;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace KhareedLo
 {
     public interface IProductRepository
     {
-        IEnumerable<Products> GetAllProducts();
+        IEnumerable<Product> GetAllProducts();
 
-        List<Products> GetAllProductsByID(List<int> IDs);
+        List<Product> GetAllProductsByID(List<int> IDs);
 
-        Products GetProductById(int prodId);
+        Product GetProductById(int prodId);
 
-        int AddProduct(Products vari);
+        int AddProduct(Product vari);
 
-        Products UpdateProduct(int id, Products vari);
+        Product UpdateProduct(int id, Product vari);
 
         void DeleteProduct(int ID);
     }

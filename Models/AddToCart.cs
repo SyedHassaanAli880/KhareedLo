@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace KhareedLo.Models.cart
+#nullable disable
+
+namespace KhareedLo.Models
 {
     public partial class AddToCart
     {
-        [Key]
         public int Id { get; set; }
         public int ProdId { get; set; }
-
-        [Required]
         public string Name { get; set; }
-
-        [Required]
         public int Price { get; set; }
-
-        [Required]
         public int? Quantity { get; set; }
-
-        [Required]
         public int TotalOfProduct { get; set; }
     }
 }

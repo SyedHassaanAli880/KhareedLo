@@ -1,18 +1,18 @@
-﻿@model ProductViewModel
+﻿@model IEnumerable<ProductViewModel>
 
 @if (Convert.ToBoolean(TempData["OrderPlaced"]) == true)
-{
+ {
     <div class="alert alert-success alert-dismissable" role="alert">
         order placed successfully!
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-}
+ }
 
 
-@foreach (var product in Model.Products)
-{
+@foreach (var product in Model)
+ {
     <div class="col-sm-4 col-lg-4 col-md-4">
         <div class="thumbnail" style="margin-top:2%" ;>
             <img src="~/images/@product.ImagePhoto" alt="" style="height:120px; width:150px;" />
@@ -25,6 +25,6 @@
         </div>
     </div>
 
-}
+ }
 
 

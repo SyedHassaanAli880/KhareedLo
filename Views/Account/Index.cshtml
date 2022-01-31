@@ -1,4 +1,4 @@
-﻿@model ProductViewModel
+﻿@model IEnumerable<ProductViewModel>
 
 @if (Convert.ToBoolean(TempData["OrderPlaced"]) == true)
 {
@@ -10,7 +10,7 @@
     </div>
 }
 
-@foreach (var products in Model.Products)
+@foreach (var products in Model)
 {
     <div class="col-sm-4 col-lg-4 col-md-4">
         <div class="thumbnail">

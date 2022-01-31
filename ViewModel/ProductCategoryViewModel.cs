@@ -1,8 +1,5 @@
-﻿using KhareedLo.Models.Category;
-using System;
+﻿using KhareedLo.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace KhareedLo.ViewModel
 {

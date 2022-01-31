@@ -18,13 +18,13 @@ namespace KhareedLo.Controllers
 
         
         [HttpPost("add-product")]
-        public IActionResult Add(Products obj)
+        public IActionResult Add(Product obj)
         {
-            var _prod = new Products()
+            var _prod = new Product()
             {
                 Name = obj.Name,
                 Price = obj.Price,
-                Category = obj.Category,
+                //Category = obj.Category,
                 ImagePhoto = obj.ImagePhoto,
                 IsInStock  = obj.IsInStock,
                 LongDescription  = obj.LongDescription,
@@ -52,7 +52,7 @@ namespace KhareedLo.Controllers
         }
 
         [HttpPut("update-product-by-id/{id}")]
-        public IActionResult UpdateProductById(int id, Products prod)
+        public IActionResult UpdateProductById(int id, Product prod)
         {
             var updateProd = _productRepository.UpdateProduct(id, prod);
 

@@ -1,5 +1,4 @@
 ﻿using KhareedLo.Models;
-using KhareedLo.Models.Category;
 using KhareedLo.Repositories.Interfaces;
 using KhareedLo.ViewModel;
 using KhareedLo.ViewModel.Product;
@@ -8,7 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -22,7 +23,7 @@ namespace KhareedLo.Controllers
 
         private readonly ICategoryRepository _categoryRepository;
 
-        private readonly Interface<Products> _repository;
+        private readonly Interface<Product> _repository;
 
         private readonly AppDbContext _appdbcontext;
 
@@ -32,7 +33,7 @@ namespace KhareedLo.Controllers
 
         private readonly AppDbContext _db;
 
-        public ProductManagementController(IProductRepository productRepository, UserManager<IdentityUser> um, AppDbContext apdb, IHostingEnvironment env, Interface<Products> Repository, AppDbContext appDbContext, ICategoryRepository categoryRepository)
+        public ProductManagementController(IProductRepository productRepository, UserManager<IdentityUser> um, AppDbContext apdb, IHostingEnvironment env, Interface<Product> Repository, AppDbContext appDbContext, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
 
@@ -51,22 +52,38 @@ namespace KhareedLo.Controllers
 
         public IActionResult HomeListOfProducts()
         {
+            List<ProductViewModel> model = new List<ProductViewModel>();
+
             var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
 
-            var obj = new ProductViewModel()
+            foreach (var b in pproducts)
             {
-                Title = "Product Shop",
+                ProductViewModel product = new ProductViewModel
+                {
+                    Title = "PRODUCTS",
+                    Id = b.Id,
+                    Name = b.Name,
+                    ImagePhoto = b.ImagePhoto,
+                    Price = b.Price,
+                    IsInStock = b.IsInStock,
+                    Quantity = b.Quantity,
+                    ShortDescription = b.ShortDescription,
+                    LongDescription = b.LongDescription,
+                    CategoryId = b.CategoryId,
+                    CategoryName = b.Category.Name
 
-                Products = pproducts.ToList()
-            };
+                };
+                model.Add(product);
+            }
 
-            return View(obj);
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult AddProduct()
         {
-            ViewBag.categories = _categoryRepository.GetAllCategories();
+            ViewBag.categories = new SelectList(_db.CategoryModels, "Id", "Name");
+
             return View();
         }
 
@@ -89,7 +106,7 @@ namespace KhareedLo.Controllers
 
                 }
 
-                Products p = new Products()
+                Product p = new Product()
                 {
                     Name = vari.Name,
                     ShortDescription = vari.ShortDescription,
@@ -97,7 +114,10 @@ namespace KhareedLo.Controllers
                     Price = vari.Price,
                     IsInStock = vari.IsInStock,
                     Quantity = vari.quantity,
-                    ImagePhoto = uniqueFileName
+                    ImagePhoto = uniqueFileName,
+                    Category = vari.CategoryName,
+                    CategoryId = vari.CatID
+                   
                 };
 
                 int x = _productRepository.AddProduct(p);
@@ -106,7 +126,7 @@ namespace KhareedLo.Controllers
                 {
                     TempData["prodID"] = p.Id;
 
-                    return RedirectToAction("AddCategoryToProduct", "ProductManagement");
+                    return RedirectToAction("HomeListOfProducts", "ProductManagement");
                 }
                 else //failure
                 {
@@ -135,17 +155,19 @@ namespace KhareedLo.Controllers
         {
             var product =  _repository.GetById(id);
 
+            ViewBag.categories = new SelectList(_db.CategoryModels, "Id", "Name");
+
             if (product == null) return RedirectToAction("HomeListOfProducts","ProductManagement");
 
             return View(product);
         }
 
         [HttpPost]
-        public IActionResult EditProductDetails(int id ,Products vari/*, IFormFile file*/)
+        public IActionResult EditProductDetails(int id ,Product vari/*, IFormFile file*/)
         {
             if (ModelState.IsValid)
             {
-                Products prod = _appdbcontext.Products.Where(x=>x.Id == id).FirstOrDefault();
+                Product prod = _appdbcontext.Products.Where(x=>x.Id == id).FirstOrDefault();
 
                 if (prod == null) return NotFound();
 
@@ -168,10 +190,11 @@ namespace KhareedLo.Controllers
                         prod.ShortDescription = vari.ShortDescription;
                         prod.Price = vari.Price;
                         prod.Quantity = vari.Quantity;
+                        prod.CategoryId = vari.CategoryId;
+                        prod.Category = vari.Category;
                         //prod.ImagePhoto = filename;
                         _appdbcontext.SaveChanges();
                         return RedirectToAction("HomeListOfProducts", "ProductManagement");
-
                     }
                     else
                     {
@@ -182,6 +205,9 @@ namespace KhareedLo.Controllers
                         prod.ShortDescription = vari.ShortDescription;
                         prod.Price = vari.Price;
                         prod.Quantity = vari.Quantity;
+                        prod.Category = vari.Category;
+                        prod.CategoryId = vari.CategoryId;
+
                         //prod.ImagePhoto = vari.ImagePhoto;
                         _appdbcontext.SaveChanges();
                         return RedirectToAction("HomeListOfProducts", "ProductManagement");
@@ -202,60 +228,60 @@ namespace KhareedLo.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult AddCategoryToProduct(int prodId)
-        {
-            int ID = Convert.ToInt32(TempData["prodID"]);
+        //[HttpGet]
+        //public IActionResult AddCategoryToProduct(int prodId)
+        //{
+        //    int ID = Convert.ToInt32(TempData["prodID"]);
 
-            var prod = _productRepository.GetProductById(ID);
+        //    var prod = _productRepository.GetProductById(ID);
 
-            if (prod == null)
-            {
-                RedirectToAction("ProductManagement", "HomeListOfProducts");
+        //    if (prod == null)
+        //    {
+        //        RedirectToAction("ProductManagement", "HomeListOfProducts");
                 
-            }
+        //    }
 
-            var obj = new ProductCategoryViewModel { ProductId = ID };
+        //    var obj = new ProductCategoryViewModel { ProductId = ID };
 
-            foreach (var categs in _categoryRepository.GGetAllCategories())
-            {   obj.categories.Add(categs);              
-            }
+        //    foreach (var categs in _categoryRepository.GGetAllCategories())
+        //    {   obj.categories.Add(categs);              
+        //    }
 
-            return View(obj);
-        }
+        //    return View(obj);
+        //}
 
-        [HttpPost]
-        public IActionResult AddCategoryToProduct(ProductCategoryViewModel vari)
-        {
-            int ID = Convert.ToInt32(TempData["prodID"]);   
+        //[HttpPost]
+        //public IActionResult AddCategoryToProduct(ProductCategoryViewModel vari)
+        //{
+        //    int ID = Convert.ToInt32(TempData["prodID"]);   
 
-            var product = _productRepository.GetProductById(vari.ProductId);
+        //    var product = _productRepository.GetProductById(vari.ProductId);
 
-           var cat = _categoryRepository.GGetCategoryById(Convert.ToInt32(vari.CategoryName));
+        //   var cat = _categoryRepository.GGetCategoryById(Convert.ToInt32(vari.CategoryName));
 
-            product.Name = product.Name;
-            product.ShortDescription = product.ShortDescription;
-            product.LongDescription = product.LongDescription;
-            product.Price = product.Price;
-            product.IsInStock = product.IsInStock;
-            product.Quantity = product.Quantity;
-            product.ImagePhoto = product.ImagePhoto;
-            product.Category = cat.Name;
+        //    product.Name = product.Name;
+        //    product.ShortDescription = product.ShortDescription;
+        //    product.LongDescription = product.LongDescription;
+        //    product.Price = product.Price;
+        //    product.IsInStock = product.IsInStock;
+        //    product.Quantity = product.Quantity;
+        //    product.ImagePhoto = product.ImagePhoto;
+        //    //product.Category = cat.Name;
 
-            if(_db.SaveChanges() > 0)
-            {
+        //    if(_db.SaveChanges() > 0)
+        //    {
 
-                TempData["IsSuccess"] = true;
+        //        TempData["IsSuccess"] = true;
 
-                return RedirectToAction("HomeListOfProducts", "ProductManagement");
+        //        return RedirectToAction("HomeListOfProducts", "ProductManagement");
 
-            }
-            else
-            {
-                TempData["IsSuccess"] = true;
-                return RedirectToAction("AddCategoryToProduct", "ProductManagement");
+        //    }
+        //    else
+        //    {
+        //        TempData["IsSuccess"] = true;
+        //        return RedirectToAction("AddCategoryToProduct", "ProductManagement");
 
-            }
-        }
+        //    }
+        //}
     }
 }

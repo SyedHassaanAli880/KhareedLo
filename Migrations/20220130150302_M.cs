@@ -2,7 +2,7 @@
 
 namespace KhareedLo.Migrations
 {
-    public partial class FeedBack : Migration
+    public partial class M : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

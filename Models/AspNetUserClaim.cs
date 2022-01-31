@@ -5,12 +5,13 @@ using System.Collections.Generic;
 
 namespace KhareedLo.Models
 {
-    public partial class ReviewsAndComment
+    public partial class AspNetUserClaim
     {
         public int Id { get; set; }
         public string UserId { get; set; }
-        public string Name { get; set; }
-        public string Comment { get; set; }
-        public int ProductId { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
+
+        public virtual AspNetUser User { get; set; }
     }
 }

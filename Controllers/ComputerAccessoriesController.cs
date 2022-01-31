@@ -27,16 +27,25 @@ namespace KhareedLo.Controllers
         }
         public IActionResult ComputerAccessoriesDisplayPage()
         {
+            List<ProductViewModel> model = new List<ProductViewModel>();
+
             var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
 
-            var obj = new ProductViewModel()
+            foreach (var b in pproducts)
             {
-                Title = "Products Shop",
+                ProductViewModel product = new ProductViewModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Price = b.Price,
+                    CategoryId = b.CategoryId,
+                    CategoryName = b.Category.Name
 
-                Products = pproducts.ToList()
-            };
+                };
+                model.Add(product);
+            }
 
-            return View(obj);
+            return View(model);
 
         }
     }

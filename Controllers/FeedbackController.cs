@@ -1,13 +1,10 @@
 ﻿using KhareedLo.Models;
-using KhareedLo.Repositories.Interfaces;
-using KhareedLo.Repositories;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using KhareedLo.ViewModel;
+using Microsoft.AspNetCore.Identity;
 
 namespace KhareedLo.Controllers
 {
@@ -16,11 +13,13 @@ namespace KhareedLo.Controllers
     {
         private readonly IFeedbackRepository _feedbackrepository;
 
-        
-        public FeedbackController(IFeedbackRepository feedbackrepository)
+        private UserManager<IdentityUser> _userManager;
+
+        public FeedbackController(IFeedbackRepository feedbackrepository, UserManager<IdentityUser> um)
         {
             _feedbackrepository = feedbackrepository;
 
+            _userManager = um;
         }
         public IActionResult Index()
         {
@@ -30,9 +29,21 @@ namespace KhareedLo.Controllers
         [HttpPost]
         public IActionResult Index(Feedbacks feedback)
         {
-            if(ModelState.IsValid)
+            string LoggedInUsername = this.User.FindFirstValue(ClaimTypes.Name);
+
+            string LoggedInUseremail = this.User.FindFirstValue(ClaimTypes.Email);
+
+            if (ModelState.IsValid)
             {
-                _feedbackrepository.AddFeedback(feedback);
+                Feedbacks f = new Feedbacks
+                {
+                    Name = LoggedInUsername,
+                    Email = LoggedInUseremail,
+                    Message = feedback.Message,
+                    ContactMe = feedback.ContactMe
+                };
+
+                _feedbackrepository.AddFeedback(f);
 
                 return RedirectToAction("FeedbackComplete");
             }

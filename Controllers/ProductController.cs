@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace KhareedLo.Controllers
@@ -28,16 +29,25 @@ namespace KhareedLo.Controllers
 
         public IActionResult Index()
         {
+            List<ProductViewModel> model = new List<ProductViewModel>();
+
             var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
 
-            var obj = new ProductViewModel()
+            foreach (var b in pproducts)
             {
-                Title = "Products Shop",
+                ProductViewModel product = new ProductViewModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Price = b.Price,
+                    ImagePhoto = b.ImagePhoto,
+                    ShortDescription = b.ShortDescription
+                    
+                };
+                model.Add(product);
+            }
 
-                Products = pproducts.ToList()
-            };
-
-            return View(obj);
+            return View(model);
         }
 
         public IActionResult Details(int ID)

@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using System;
-@model ProductViewModel
+@model  IEnumerable<ProductViewModel>
 <style>
     .styleheading {
         background-color: black;
@@ -37,7 +37,7 @@
         <th >ACTIONS</th>
     </tr>
 
-    @foreach (var product in Model.Products)
+    @foreach (var product in Model)
     {
         <tr>
             <td>@product.Id</td>
@@ -50,11 +50,11 @@
             <td class="col-md-1">@product.Quantity</td>
             <td class="col-md-1">@product.ShortDescription</td>
             <td class="col-md-2">@product.LongDescription</td>
-            <td class="col-md-1">@product.Category</td>
+            <td class="col-md-1">@product.CategoryName</td>
             <td>
-                <a class="btn btn-sm btn-primary col-md-6" asp-controller="ProductManagement" asp-action="EditProductDetails" asp-route-id="@product.Id">Edit</a>
+                <a class="btn btn-sm btn-primary col-md-12" asp-controller="ProductManagement" asp-action="EditProductDetails" asp-route-id="@product.Id">Edit</a>
                 <form asp-controller="ProductManagement" asp-action="DeleteProduct" asp-route-id="@product.Id" method="post">
-                    <button type="submit" onclick="return confirm('Are you sure?');" class="btn btn-sm btn-danger col-md-6">Delete</button>
+                    <button type="submit" onclick="return confirm('Are you sure?');" class="btn btn-sm btn-danger col-md-12">Delete</button>
                 </form>
             </td>
         </tr>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace KhareedLo.Models
@@ -12,22 +13,22 @@ namespace KhareedLo.Models
             _appDbContext = appDbContext;
         }
 
-        public List<Products> GetAllProductsByID(List<int> IDs)
+        public List<Product> GetAllProductsByID(List<int> IDs)
         {
             return _appDbContext.Products.Where(p => IDs.Contains(p.Id)).ToList();
         }
 
-        public IEnumerable<Products> GetAllProducts()
+        public IEnumerable<Product> GetAllProducts()
         {
-            return _appDbContext.Products;
+            return _appDbContext.Products.Include(c => c.Category).ToList();
         }
 
-        public Products GetProductById(int prodId)
+        public Product GetProductById(int prodId)
         {
             return _appDbContext.Products.FirstOrDefault(p => p.Id == prodId);
         }
 
-        public int AddProduct(Products vari)
+        public int AddProduct(Product vari)
         {
             _appDbContext.Products.Add(vari);
 
@@ -36,7 +37,7 @@ namespace KhareedLo.Models
             return x;
         }
 
-        public Products UpdateProduct(int id, Products obj)
+        public Product UpdateProduct(int id, Product obj)
         {  
             var prod = _appDbContext.Products.FirstOrDefault(x => x.Id == id);
             

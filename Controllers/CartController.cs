@@ -1,15 +1,10 @@
 ﻿using KhareedLo.Models;
-using KhareedLo.Models.cart;
-using KhareedLo.Repositories;
 using KhareedLo.ViewModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using KhareedLo.Models.Category;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace KhareedLo.Controllers
 {

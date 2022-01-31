@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KhareedLo.Repositories.Interfaces;
-using KhareedLo.Models.Category;
 using KhareedLo.Models;
 using Microsoft.EntityFrameworkCore;
 
