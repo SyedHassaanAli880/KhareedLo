@@ -32,29 +32,29 @@
     </form>
 
 
-    @*<div class="cold-md-6">
+    <div class="cold-md-6">
 
-                <h4>Or use another service to login!</h4>
-                @{
-                    if(Model.ExternalLogins.Count == 0)
-                    {
-                        <div>No external logins configured.</div>
-                    }
-                    else
-                    {
-                        <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
-                            <div>
-                                @foreach(var provider in @Model.ExternalLogins)
-                                 {
-                                    <button type="submit" class="btn btn-primary"
-                                            name="provider" value="@provider.Name"
-                                            title="Login using your @provider.DisplayName account">
-                                        @provider.DisplayName
-                                    </button>
-                                 }
-                            </div>
-                        </form>
-                    }
-                }
+        <h4>Or use another service to login!</h4>
+        @{
+            if(Model.ExternalLogins.Count == 0)
+            {
+                <div>No external logins configured.</div>
+            }
+            else
+            {
+                <form method="post" asp-action="ExternalLogin" asp-controller="Account" asp-route-returnUrl="@Model.ReturnUrl">
+                    <div>
+                        @foreach(var provider in Model.ExternalLogins)
+                         {
+                                <button type="submit" class="btn btn-primary"
+                                        name="provider" value="@provider.Name"
+                                        title="Login using your @provider.DisplayName account">
+                                    @provider.DisplayName
+                                </button>
+                         }
+                    </div>
+                </form>
+            }
+        }
 
-        </div>*@
+    </div>

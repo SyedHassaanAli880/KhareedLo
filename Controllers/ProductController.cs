@@ -1,4 +1,5 @@
-﻿using KhareedLo.Models;
+﻿using KhareedLo.Auth;
+using KhareedLo.Models;
 using KhareedLo.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,11 +15,11 @@ namespace KhareedLo.Controllers
 
         private readonly IProductRepository _productRepository;
 
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly AppDbContext _db;
 
-        public ProductController(IProductRepository productRepository, UserManager<IdentityUser> um, AppDbContext apdb)
+        public ProductController(IProductRepository productRepository, UserManager<ApplicationUser> um, AppDbContext apdb)
         {
             _productRepository = productRepository;
 

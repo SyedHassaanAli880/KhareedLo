@@ -8,5 +8,7 @@ namespace KhareedLo.Auth
         public DateTime Birthdate { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+
+        public IdentityRole Role { get; set; }
     }
 }

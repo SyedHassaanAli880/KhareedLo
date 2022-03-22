@@ -12,13 +12,13 @@ namespace KhareedLo.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly AppDbContext _db;
 
-        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, AppDbContext apb)
+        public AccountController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, AppDbContext apb)
         {
             _signInManager = signInManager; _userManager = userManager;
 

@@ -1,11 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Authorization
+@using KhareedLo.Auth 
 
 <!DOCTYPE html>
 
-@inject SignInManager<IdentityUser> SignInManager
+@inject SignInManager<ApplicationUser> SignInManager
 @inject IAuthorizationService AuthorizationService
-@inject UserManager<IdentityUser> UserManager
+@inject UserManager<ApplicationUser> UserManager
 
 <html>
 <head>
@@ -17,7 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     @*<script src="~/Scripts/jquery-2.0.3.js" type="text/javascript"></script>
-    <script src="~/Scripts/jquery_cookie.js" type="text/javascript"></script>*@
+        <script src="~/Scripts/jquery_cookie.js" type="text/javascript"></script>*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>"
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <environment include="Development">
@@ -30,6 +31,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -69,7 +71,7 @@
                                 <br />
                             </div>
                         </li>
-                         
+
                         <li><a asp-area="" asp-controller="Product" asp-action="Index">Products</a></li>
 
                         @*Feedback*@
@@ -82,7 +84,7 @@
                             </a>
                         </li>
 
-                         <li>
+                        <li>
                             <a href="#" onclick="showInPopup('@Url.Action("CartProducts","Cart")')">
                                 Cart
                                 <span>
@@ -91,7 +93,7 @@
                             </a>
                         </li>
 
-                         @*Admin*@
+                        @*Admin*@
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
                             <div class="dropdown-menu">
@@ -118,8 +120,8 @@
                         </li>
 
                     </ul>
-                    
-                 }
+
+                }
                 else
                 {
                     <ul class="nav navbar-nav">
@@ -169,7 +171,7 @@
 
                 }
             </div>
-           
+
         </div>
     </nav>
 
@@ -181,7 +183,7 @@
                     <h2 class="modal-title" id="exampleModalLabel">SHOPPING CART</h2>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="modal-body">     
+                <div class="modal-body">
                 </div>
                 <div class="modal-footer">
                     <a asp-area="" asp-controller="Cart" asp-action="CheckOutPage" type="button" class="btn btn-primary">Checkout</a>
@@ -196,9 +198,8 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; 2021 - KhareedLo</p>
-        </footer>
+
+
     </div>
 
 
@@ -233,5 +234,52 @@
     <script>
 
     </script>
+
+    <footer>
+        <div style="background-color:#0c2f44;">
+            <div class="container h-1">
+                <div class="row py-1 d-flex glyphicon-align-center">
+                    <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+                        <h6 class="mb-0" style="color:white;">Get connected with us on social media!</h6>
+                    </div>
+                    <div class="flex-center">
+                        <!--Facebook-->
+                        <a class="fb-ic">
+                            <i class="fab fa-facebook-f fa-lg white-text mr-4"></i>
+                        </a>
+
+                        <!--Twitter-->
+                        <a class="fb-ic">
+                            <i class="fab fa-twitter fa-lg white-text mr-4"></i>
+                        </a>
+
+                        <!--Google-->
+                        <a class="gplus-ic">
+                            <i class="fab fa-google-plus-g fa-lg white-text mr-4"></i>
+                        </a>
+
+                        <!--LinkedIn-->
+                        <a class="li-ic">
+                            <i class="fab fa-linkedin-in fa-lg white-text mr-4"></i>
+                        </a>
+
+                        <!--Instagram-->
+                        <a class="ins-ic">
+                            <i class="fab fa-instagram fa-lg white-text mr-4"></i>
+                        </a>
+
+                        <!--Pinterest-->
+                        <a class="pin-ic">
+                            <i class="fab fa-pinterest fa-lg white-text mr-4"></i>
+                        </a>
+                    </div>
+                </div>
+                <div style="color:white">
+                    
+                </div>
+            </div>
+        </div>
+        <p>&copy; @DateTime.Now.Year - KhareedLo</p>
+    </footer>
 </body>
 </html>

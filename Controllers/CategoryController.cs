@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +7,7 @@ using KhareedLo.Models;
 using KhareedLo.ViewModel.Category;
 using KhareedLo.ViewModel;
 using System.Collections.Generic;
+using KhareedLo.Auth;
 
 namespace KhareedLo.Controllers
 {
@@ -17,11 +17,13 @@ namespace KhareedLo.Controllers
 
         private readonly IProductRepository _productRepository;
 
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IGenericRepository<CategoryModel> _GRepository;
+
+        private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly AppDbContext _db;
 
-        public CategoryController(ICategoryRepository categoryRepository, UserManager<IdentityUser> um, AppDbContext apdb, IProductRepository obj)
+        public CategoryController(ICategoryRepository categoryRepository, UserManager<ApplicationUser> um, AppDbContext apdb, IProductRepository obj, IGenericRepository<CategoryModel> GG)
         {
             _categoryRepository = categoryRepository;
 
@@ -30,11 +32,15 @@ namespace KhareedLo.Controllers
             _db = apdb;
 
             _productRepository = obj;
+
+            _GRepository = GG;
         }
         
-        public async Task<IActionResult> DisplayCategories()
+        public IActionResult DisplayCategories()
         {
-            var ccategories = await _categoryRepository.GetAllCategories();
+            var ccategories = _GRepository.GetAll();
+
+                //await _categoryRepository.GetAllCategories();
 
             var obj = new CategoryViewModel()
             {
@@ -47,37 +53,37 @@ namespace KhareedLo.Controllers
         [HttpGet]
         public IActionResult AddCategory()
         {
-           
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddCategory(AddCategoryViewModel vari)
+        public IActionResult AddCategory(CategoryModel vari)
         {
-                CategoryModel p = new CategoryModel
-                {
-                    Name = vari.Name,
-                    IsActive = vari.IsActive
+            CategoryModel p = new CategoryModel();
 
-                };
-                
-                var x = _categoryRepository.AddCategory(p);
-
-                if (x != null) //success
+                if (ModelState.IsValid)
                 {
+                    p.Name = vari.Name;
+                    p.IsActive = vari.IsActive;
+                    
+                    //_categoryRepository.AddCategory(p);
+
+                    _GRepository.Insert(p);
+
+                    //success
                     return RedirectToAction("DisplayCategories", "Category");
                 }
-                else //failure
+                else
                 {
-                    return RedirectToAction("AddCategory", "Category");
+                    return View(p);
                 }
-
         }
 
         [HttpPost]
         public IActionResult DeleteCategory(int ID)
         {
-            bool result = _categoryRepository.DDeleteCategory(ID);
+            bool result = _GRepository.Delete(ID);
+                //= _categoryRepository.DDeleteCategory(ID);
 
             if (result) //success
             {
@@ -93,7 +99,8 @@ namespace KhareedLo.Controllers
         [HttpGet]
         public IActionResult EditCategory(int id)
         {
-            var category = _categoryRepository.GGetCategoryById(id);
+            var category = _GRepository.GetById(id);
+                //_categoryRepository.GGetCategoryById(id);
 
             if (category == null) return RedirectToAction("DisplayCategories", "Category");
 
@@ -109,26 +116,16 @@ namespace KhareedLo.Controllers
 
                 if (categ == null) return NotFound();
 
-                try
-                {
                     categ.Name = vari.Name;
                     categ.IsActive = vari.IsActive;
 
                     _db.SaveChanges();
 
                     return RedirectToAction("DisplayCategories", "Category");
-
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-
-                }
-
             }
             else
             {
-                return RedirectToAction("DisplayCategories", "Category");
+                return View(vari);
             }
         }
 
@@ -146,6 +143,7 @@ namespace KhareedLo.Controllers
                     Id = b.Id,
                     Name = b.Name,
                     Price = b.Price,
+                    ImagePhoto = b.ImagePhoto,
                     CategoryId = b.CategoryId,
                     CategoryName = b.Category.Name
 
@@ -170,6 +168,7 @@ namespace KhareedLo.Controllers
                     Id = b.Id,
                     Name = b.Name,
                     Price = b.Price,
+                    ImagePhoto = b.ImagePhoto,
                     CategoryId = b.CategoryId,
                     CategoryName = b.Category.Name
 
@@ -195,6 +194,7 @@ namespace KhareedLo.Controllers
                     Id = b.Id,
                     Name = b.Name,
                     Price = b.Price,
+                    ImagePhoto = b.ImagePhoto,
                     CategoryId = b.CategoryId,
                     CategoryName = b.Category.Name
 
@@ -220,6 +220,7 @@ namespace KhareedLo.Controllers
                     Id = b.Id,
                     Name = b.Name,
                     Price = b.Price,
+                    ImagePhoto = b.ImagePhoto,
                     CategoryId = b.CategoryId,
                     CategoryName = b.Category.Name
 
@@ -244,6 +245,7 @@ namespace KhareedLo.Controllers
                     Id = b.Id,
                     Name = b.Name,
                     Price = b.Price,
+                    ImagePhoto = b.ImagePhoto,
                     CategoryId = b.CategoryId,
                     CategoryName = b.Category.Name
 
@@ -268,6 +270,7 @@ namespace KhareedLo.Controllers
                     Id = b.Id,
                     Name = b.Name,
                     Price = b.Price,
+                    ImagePhoto = b.ImagePhoto,
                     CategoryId = b.CategoryId,
                     CategoryName = b.Category.Name
 

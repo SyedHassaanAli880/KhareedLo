@@ -1,5 +1,6 @@
 ﻿using KhareedLo.Models;
 using KhareedLo.ViewModel;
+using KhareedLo.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,7 +13,7 @@ namespace KhareedLo.Controllers
     {
         private readonly IProductRepository _productRepository;
 
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly AppDbContext _db;
 
@@ -38,7 +39,7 @@ namespace KhareedLo.Controllers
             return View(model);
         }
 
-        public CartController(IProductRepository productRepository, UserManager<IdentityUser> um, AppDbContext apdb)
+        public CartController(IProductRepository productRepository, UserManager<ApplicationUser> um, AppDbContext apdb)
         {
             _productRepository = productRepository;
 

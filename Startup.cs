@@ -10,6 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using KhareedLo.ViewModel;
+using System.Text.Json.Serialization;
+using KhareedLo.Auth;
+using Newtonsoft.Json;
 
 namespace KhareedLo
 {
@@ -32,12 +35,19 @@ namespace KhareedLo
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddAuthentication().AddGoogle(options =>{
-           IConfigurationSection googleAuthNSection =
-                Configuration.GetSection("Authentication:Google");
-                options.ClientId = googleAuthNSection["ClientID"];
-                options.ClientSecret = googleAuthNSection["ClientSecret"];
-           });
+           // services.AddAuthentication().AddGoogle(options =>{
+           //IConfigurationSection googleAuthNSection =
+           //     Configuration.GetSection("Authentication:Google");
+           //     options.ClientId = googleAuthNSection["ClientID"];
+           //     options.ClientSecret = googleAuthNSection["ClientSecret"];
+           //});
+
+            services.AddAuthentication().AddGoogle(options => {
+
+                options.SignInScheme = IdentityConstants.ExternalScheme;
+                options.ClientId = "993170839779-406bp87todv8ik8n1svu65eigsi1o1r8.apps.googleusercontent.com";
+                options.ClientSecret = "9Tdr7LFcwhXUbm7-LlAOEWNa";
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -50,6 +60,10 @@ namespace KhareedLo
 
             services.AddTransient<ICategoryRepository, CategoryRepository>();
 
+            //services.AddTransient<IGenericRepository, GenericRepository><>();
+
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
             services.AddTransient(typeof(Interface<>), typeof(Repository<>));
 
             services.AddScoped<SignInManager<LoginViewModel>>();
@@ -59,7 +73,7 @@ namespace KhareedLo
             //services.AddIdentity<IdentityUser, IdentityRole>()    
             //    .AddEntityFrameworkStores<AppDbContext>();
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 8;
                 options.Password.RequireNonAlphanumeric = true;
@@ -76,6 +90,12 @@ namespace KhareedLo
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            //var json = JsonConvert.SerializeObject(harry,
+            //        new JsonSerializerSettings()
+            //        {
+            //            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            //        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

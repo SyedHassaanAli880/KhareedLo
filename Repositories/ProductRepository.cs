@@ -23,6 +23,11 @@ namespace KhareedLo.Models
             return _appDbContext.Products.Include(c => c.Category).ToList();
         }
 
+        public List<Product> GetAllProduct()
+        {
+            return _appDbContext.Products.ToList();
+        }
+
         public Product GetProductById(int prodId)
         {
             return _appDbContext.Products.FirstOrDefault(p => p.Id == prodId);
@@ -91,7 +96,7 @@ namespace KhareedLo.Models
 
         public void DeleteProduct(int ID)
         {
-            var prod = _appDbContext.Products.FirstOrDefault(x=>x.Id == ID);
+            var prod = _appDbContext.Products.FirstOrDefault(x => x.Id == ID);
             
             if(prod != null)
             {
@@ -99,6 +104,66 @@ namespace KhareedLo.Models
 
                 _appDbContext.SaveChanges();
             }
+        }
+
+        public void DDeleteProduct(int ID)
+        {
+            var prod = _appDbContext.Products.Where(p => p.Id == ID) .FirstOrDefault();
+
+            _appDbContext.Entry(prod).State = EntityState.Deleted;
+            _appDbContext.SaveChanges();
+        }
+
+        public Product UpdateProductTT(Product vari)
+        {
+            var prod = _appDbContext.Products.FirstOrDefault(x => x.Id == vari.Id);
+
+            if (prod != null)
+            {
+                if (/*ModelState.IsValid*/true)
+                {
+                    //string uniqueFileName = null;
+
+                    //if (vari.ImagePhoto != null)
+                    //{
+                    //    string uploadsfolder = Path.Combine(_env.WebRootPath, "images");
+
+                    //    uniqueFileName = Guid.NewGuid().ToString() + "_" + vari.ImagePhoto.FileName;
+
+                    //    string filePath = Path.Combine(uploadsfolder, uniqueFileName);
+
+                    //    vari.ImagePhoto.CopyTo(new FileStream(filePath, FileMode.Create));
+
+                    //}
+
+
+                    prod.Name = vari.Name;
+                    prod.ShortDescription = vari.ShortDescription;
+                    prod.LongDescription = vari.LongDescription;
+                    prod.Price = vari.Price;
+                    prod.IsInStock = vari.IsInStock;
+                    prod.Quantity = vari.Quantity;
+
+                    //ImagePhoto = uniqueFileName
+
+
+                    //Products p = new Products
+                    //{
+                    //    Name = vari.Name,
+                    //    ShortDescription = vari.ShortDescription,
+                    //    LongDescription = vari.LongDescription,
+                    //    Price = vari.Price,
+                    //    IsInStock = vari.IsInStock,
+                    //    Quantity = vari.Quantity,
+
+                    //    //ImagePhoto = uniqueFileName
+                    //};
+
+                    _appDbContext.SaveChanges();
+                }
+            }
+
+            return prod;
         }
     }
 }

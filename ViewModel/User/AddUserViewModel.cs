@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace KhareedLo.ViewModel
@@ -16,6 +17,10 @@ namespace KhareedLo.ViewModel
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        public int RoleId { get; set; }
+
+        public IdentityRole Role { get; set; }
 
         //[Required]
         //public string City { get; set; }

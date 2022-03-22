@@ -11,14 +11,14 @@ namespace KhareedLo.ViewModel
     {
         public UserRoleViewModel()
         {
-            Users = new List<IdentityUser>();
+            Users = new List<ApplicationUser>();
         }
 
         public string UserId { get; set; }
 
         public string RoleId { get; set; }
 
-        public List<IdentityUser> Users { get; set; }
+        public List<ApplicationUser> Users { get; set; }
         
     }
 }

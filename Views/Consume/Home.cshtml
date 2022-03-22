@@ -1,0 +1,38 @@
+﻿@{ 
+    ViewBag.TiTle = "Product";
+    Layout = "~/View/Shared/_Layout.cshtml";
+}
+
+<button onclick="GetAllProducts()" class="btn btn-primary"></button>
+
+<table>
+    <thead>
+        <tr class="styleheading">
+            <th>ID</th>
+            <th>NAME</th>
+            <th>IMAGE</th>
+            <th>PRICE</th>
+            <th>IN STOCK</th>
+            <th>TOTAL QUANTITY</th>
+            <th>SHORT DESCRIPTION</th>
+            <th>LONG DESCRIPTION</th>
+        </tr>
+    </thead>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+    function GetAllProducts() {
+        $.getJSON("Consume/Index", function (products) {
+            $("#tblProduct tbody tr").remove();
+            $.map(products, function (products) {
+                $("#tblProduct tbody").append("<tr>"
+                    + "<td>" + products.Name + "</td>"
+                    +"</tr>"};
+            });
+        });
+
+    }
+</script>

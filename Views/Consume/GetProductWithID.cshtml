@@ -1,0 +1,104 @@
+﻿@*@model KhareedLo.Models.Product
+
+@{
+    ViewData["Title"] = "GetProductWithID";
+}
+
+<h2>GetProductWithID</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ShortDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LongDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LongDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsInStock)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsInStock)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagePhoto)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImagePhoto)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+
+<input type="button" value="Get All Products" id="btn1"/>
+<div id="showData">
+    </br>
+    <input type="text" placeholder="Enter" id="txt" />
+    <input type="button" placeholder="Get by ID" id="btn3" />
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#btn3").click(function () {
+            var id = $("#text").val();
+            $.getJSON('/api/ProductAPII/' + id, function (responseData) {
+               
+                var item = "<h2>" + responseData + "</h2>"
+                $(item).appendTo("#showData");
+                
+            });
+        });
+
+
+
+        $("#btn1").click(function () {
+            $.getJSON('/api/ProductAPII', function () {
+                $.each(responseData, function (key, val) {
+                    var item = "<h2>" + val + "</h2>"
+                    $(item).appendTo("#showData");
+                });
+            });
+        });
+
+    });
+
+</script>

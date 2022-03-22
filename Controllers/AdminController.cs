@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace KhareedLo.Controllers
 {
@@ -13,11 +14,11 @@ namespace KhareedLo.Controllers
     //[Authorize(Policy = "AddPie")]
     public class AdminController : Controller
     {
-        private UserManager<IdentityUser> _userManager;
+        private UserManager<ApplicationUser> _userManager;
 
         private RoleManager<IdentityRole> _roleManager;
 
-        public AdminController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
 
@@ -49,6 +50,10 @@ namespace KhareedLo.Controllers
         [HttpGet]
         public IActionResult AddRole()
         {
+            IEnumerable<IdentityRole> x = new List<IdentityRole>();
+
+            ViewBag.Roles = new SelectList(x, "Id", "Name");
+
             return View();
         }
 
@@ -57,7 +62,7 @@ namespace KhareedLo.Controllers
         {
             if (!ModelState.IsValid) return View(addUserViewModel);
 
-            var user = new IdentityUser()
+            var user = new ApplicationUser()
             {
                 UserName = addUserViewModel.UserName,
                 Email = addUserViewModel.Email,
@@ -118,13 +123,12 @@ namespace KhareedLo.Controllers
                 ModelState.AddModelError("", "User not found.");
             }
             return RedirectToAction("UserManagement", _userManager.Users);
-
         }
 
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string userId)
         {
-            IdentityUser user = await _userManager.FindByIdAsync(userId);
+            ApplicationUser user = await _userManager.FindByIdAsync(userId);
 
             if (user != null)
             {
@@ -146,7 +150,9 @@ namespace KhareedLo.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(arvm);
+                //return View(arvm);
+
+                return RedirectToAction("RoleManagement", "Admin");
             }
 
             var role = new IdentityRole
@@ -158,7 +164,7 @@ namespace KhareedLo.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("RoleManagement", _roleManager.Roles);
+                return RedirectToAction("RoleManagement","Admin", _roleManager.Roles);
             }
 
             foreach (IdentityError error in result.Errors)
@@ -166,7 +172,9 @@ namespace KhareedLo.Controllers
                 ModelState.AddModelError("", error.Description);
             }
 
-            return View(arvm);
+            //return View(arvm);
+
+            return RedirectToAction("RoleManagement", "Admin");
         }
 
         [HttpGet]

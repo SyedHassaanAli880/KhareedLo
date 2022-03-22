@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using KhareedLo.ViewModel;
 using Microsoft.AspNetCore.Identity;
+using KhareedLo.Auth;
 
 namespace KhareedLo.Controllers
 {
@@ -13,9 +14,9 @@ namespace KhareedLo.Controllers
     {
         private readonly IFeedbackRepository _feedbackrepository;
 
-        private UserManager<IdentityUser> _userManager;
+        private UserManager<ApplicationUser> _userManager;
 
-        public FeedbackController(IFeedbackRepository feedbackrepository, UserManager<IdentityUser> um)
+        public FeedbackController(IFeedbackRepository feedbackrepository, UserManager<ApplicationUser> um)
         {
             _feedbackrepository = feedbackrepository;
 

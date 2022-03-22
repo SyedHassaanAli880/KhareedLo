@@ -1,4 +1,5 @@
-﻿using KhareedLo.Models;
+﻿using KhareedLo.Auth;
+using KhareedLo.Models;
 using KhareedLo.Repositories.Interfaces;
 using KhareedLo.ViewModel;
 using KhareedLo.ViewModel.Product;
@@ -12,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace KhareedLo.Controllers
 {
@@ -27,13 +29,13 @@ namespace KhareedLo.Controllers
 
         private readonly AppDbContext _appdbcontext;
 
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly IHostingEnvironment _env;
 
         private readonly AppDbContext _db;
 
-        public ProductManagementController(IProductRepository productRepository, UserManager<IdentityUser> um, AppDbContext apdb, IHostingEnvironment env, Interface<Product> Repository, AppDbContext appDbContext, ICategoryRepository categoryRepository)
+        public ProductManagementController(IProductRepository productRepository, UserManager<ApplicationUser> um, AppDbContext apdb, IHostingEnvironment env, Interface<Product> Repository, AppDbContext appDbContext, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
 
@@ -88,7 +90,7 @@ namespace KhareedLo.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProduct(AddProductViewModel vari)
+        public async Task<IActionResult> AddProduct(AddProductViewModel vari)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +104,7 @@ namespace KhareedLo.Controllers
 
                     string filePath = Path.Combine(uploadsfolder, uniqueFileName);
 
-                    vari.ImagePhoto.CopyTo(new FileStream(filePath, FileMode.Create));
+                    await vari.ImagePhoto.CopyToAsync(new FileStream(filePath, FileMode.Create));
 
                 }
 
@@ -119,7 +121,7 @@ namespace KhareedLo.Controllers
                     CategoryId = vari.CatID
                    
                 };
-
+                p.ImagePhoto = uniqueFileName;
                 int x = _productRepository.AddProduct(p);
 
                 if(x > 0) //success
@@ -137,7 +139,7 @@ namespace KhareedLo.Controllers
             }
             else
             {
-                return RedirectToAction("HomeListOfProducts", "ProductManagement");
+                return View(vari);
             }
            
         }
@@ -163,68 +165,61 @@ namespace KhareedLo.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProductDetails(int id ,Product vari/*, IFormFile file*/)
+        public async Task<IActionResult> EditProductDetails(int id, Product vari, IFormFile file)
         {
             if (ModelState.IsValid)
             {
-                Product prod = _appdbcontext.Products.Where(x=>x.Id == id).FirstOrDefault();
+                Product prod = _appdbcontext.Products.Where(x => x.Id == id).FirstOrDefault();
+
+                string currentImageName = prod.ImagePhoto;
 
                 if (prod == null) return NotFound();
 
-                try
+                if(file == null) //use existing image
                 {
-                    if (/*file != null*/false)
-                    {
-                        //string filename = System.Guid.NewGuid().ToString() + ".jpg";
-
-                        //var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", filename);
-
-                        //using (var stream = new FileStream(path, FileMode.Create))
-                        //{
-                        //    file.CopyToAsync(stream);
-                        //}
-
-                        prod.Name = vari.Name;
-                        prod.IsInStock = vari.IsInStock;
-                        prod.LongDescription = vari.LongDescription;
-                        prod.ShortDescription = vari.ShortDescription;
-                        prod.Price = vari.Price;
-                        prod.Quantity = vari.Quantity;
-                        prod.CategoryId = vari.CategoryId;
-                        prod.Category = vari.Category;
-                        //prod.ImagePhoto = filename;
-                        _appdbcontext.SaveChanges();
-                        return RedirectToAction("HomeListOfProducts", "ProductManagement");
-                    }
-                    else
-                    {
-
-                        prod.Name = vari.Name;
-                        prod.IsInStock = vari.IsInStock;
-                        prod.LongDescription = vari.LongDescription;
-                        prod.ShortDescription = vari.ShortDescription;
-                        prod.Price = vari.Price;
-                        prod.Quantity = vari.Quantity;
-                        prod.Category = vari.Category;
-                        prod.CategoryId = vari.CategoryId;
-
-                        //prod.ImagePhoto = vari.ImagePhoto;
-                        _appdbcontext.SaveChanges();
-                        return RedirectToAction("HomeListOfProducts", "ProductManagement");
-
-                        
-                    }
+                    prod.Name = vari.Name;
+                    prod.IsInStock = vari.IsInStock;
+                    prod.LongDescription = vari.LongDescription;
+                    prod.ShortDescription = vari.ShortDescription;
+                    prod.Price = vari.Price;
+                    prod.Quantity = vari.Quantity;
+                    prod.Category = vari.Category;
+                    prod.CategoryId = vari.CategoryId;
+                    prod.ImagePhoto = currentImageName;
+                    
+                    _appdbcontext.SaveChanges();
+                    
+                    return RedirectToAction("HomeListOfProducts", "ProductManagement");
                 }
-                catch(Exception ex)
+                else //use new image 
                 {
-                    throw new Exception(ex.Message); 
-                   
-                }
+                    string fileName = Guid.NewGuid().ToString()+file.FileName+".jpg";
+                    
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
 
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    prod.Name = vari.Name;
+                    prod.IsInStock = vari.IsInStock;
+                    prod.LongDescription = vari.LongDescription;
+                    prod.ShortDescription = vari.ShortDescription;
+                    prod.Price = vari.Price;
+                    prod.Quantity = vari.Quantity;
+                    prod.Category = vari.Category;
+                    prod.CategoryId = vari.CategoryId;
+                    prod.ImagePhoto = fileName;
+
+                    _appdbcontext.SaveChanges();
+
+                    return RedirectToAction("HomeListOfProducts", "ProductManagement");
+                }
             }
             else
             {
-                return RedirectToAction("HomeListOfProducts", "ProductManagement");
+                return View(vari);
             }
         }
 
@@ -238,7 +233,7 @@ namespace KhareedLo.Controllers
         //    if (prod == null)
         //    {
         //        RedirectToAction("ProductManagement", "HomeListOfProducts");
-                
+
         //    }
 
         //    var obj = new ProductCategoryViewModel { ProductId = ID };

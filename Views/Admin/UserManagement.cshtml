@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @using KhareedLo.Auth
 
-@model IEnumerable<IdentityUser>
+@model IEnumerable<ApplicationUser>
 
 <style>
     .styleheading {
@@ -21,7 +21,7 @@
 }
 else
 {
-    <table class="table table-condensed table-bordered" style="margin-top:1%;">
+    <table class="table table-condensed" style="margin-top:1%;">
 
         <tr class="styleheading">
             <th>USER ID</th>
@@ -30,11 +30,12 @@ else
             <th>ACTIONS</th>
         </tr>
 
-        @foreach (IdentityUser user in Model)
+        @foreach (ApplicationUser user in Model)
         {
             <tr>
                 <td>@user.Id</td>
                 <td>@user.UserName</td>
+                
                 <td>@user.Email</td>
                 <td>
                     <a class="btn btn-sm btn-primary col-md-6" asp-controller="Admin" asp-action="EditUser" asp-route-id="@user.Id">Edit</a>

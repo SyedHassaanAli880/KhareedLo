@@ -1,4 +1,7 @@
-﻿@model Microsoft.AspNetCore.Identity.IdentityUser
+﻿
+@using KhareedLo.Auth
+
+@model ApplicationUser
 
 <h2>EDIT USER</h2>
 
@@ -41,12 +44,12 @@
 
 
 @*<h3>Claims for this user:</h3>
-<ul>
-    @foreach (var claim in Model.UserClaims)
-    {
-        <li>@claim</li>
-    }
-</ul>
+    <ul>
+        @foreach (var claim in Model.UserClaims)
+        {
+            <li>@claim</li>
+        }
+    </ul>
 
-<a asp-action="ManageClaimsForUsers" asp-controller="Admin" asp-route-userId="@Model.Id" class="btn btn-primary">Manage claims</a>*@
+    <a asp-action="ManageClaimsForUsers" asp-controller="Admin" asp-route-userId="@Model.Id" class="btn btn-primary">Manage claims</a>*@
 
