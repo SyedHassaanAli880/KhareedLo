@@ -1,4 +1,4 @@
-﻿@model Products
+﻿@model Product
 
     <h2>@Model.Name</h2>
 
@@ -15,10 +15,18 @@
 
         <tr>
             <th>AVAILABILITY</th>
-            
+
             <th style="text-align:center">ACTION</th>
         </tr>
-
+        <tr>
+            <th>RATINGS</th>
+            <th style="text-align:center">QUANTITY</th>
+            <td style="text-align:center">
+                <button class="btn minus-btn disabled" type="button">-</button>
+                <input type="text" id="quantity" value="1" />
+                <button class="btn plus-btn">+</button>
+            </td>
+        </tr>
         <tr>
             @if (Model.IsInStock == true)
             {
@@ -89,4 +97,31 @@
             $("#CartProductsCount").html("Cart(" + products.length + ")");
 
         });
+
+         
+
+ document.querySelector(".minus-btn").setAttribute("disabled", "disabled");
+
+        var valueCount
+
+        document.querySelector(".plus-btn").addEventListener("click", function () {
+            valueCount = document.getElementById("quantity").value;
+            valueCount++;
+            document.getElementById("quantity").value = valueCount;
+
+            if (valueCount > 1) {
+                document.querySelector(".minus-btn").removeAttribute("disabled", "disabled");
+            }
+        })
+
+        document.querySelector(".minus-btn").addEventListener("click", function () {
+            valueCount = document.getElementById("quantity").value;
+            valueCount--;
+            document.getElementById("quantity").value = valueCount
+            if (valueCount == 1) {
+                document.querySelector(".minus-btn").setAttribute("disabled", "disabled");
+            }
+        })
+
+
     </script>

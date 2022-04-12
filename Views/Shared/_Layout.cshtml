@@ -50,7 +50,7 @@
                 {
                     <ul class="nav navbar-nav">
                         <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">CATEGORIES</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="Category" asp-action="LaptopProductsPage">Laptop</a>
                                 <br />
@@ -72,12 +72,22 @@
                             </div>
                         </li>
 
-                        <li><a asp-area="" asp-controller="Product" asp-action="Index">Products</a></li>
+                        <li><a asp-area="" asp-controller="Product" asp-action="Index">PRODUCTS</a></li>
+
+                        @*HOME*@
+                        <li>
+                            <a asp-area="" asp-controller="HOME" asp-action="MainPage">
+                                HOME
+                                <span>
+                                    <i class="fa fa-commenting" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </li>
 
                         @*Feedback*@
                         <li>
                             <a asp-area="" asp-controller="Feedback" asp-action="Index">
-                                Feedback
+                                FEEDBACK
                                 <span>
                                     <i class="fa fa-commenting" aria-hidden="true"></i>
                                 </span>
@@ -86,7 +96,7 @@
 
                         <li>
                             <a href="#" onclick="showInPopup('@Url.Action("CartProducts","Cart")')">
-                                Cart
+                                CART
                                 <span>
                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </span>
@@ -95,7 +105,7 @@
 
                         @*Admin*@
                         <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">ADMIN</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="Admin" asp-action="UserManagement">User Management </a><br />
                                 <a class="dropdown-item" asp-controller="Admin" asp-action="RoleManagement">Role Management</a>
@@ -106,18 +116,18 @@
                         </li>
 
                         @*Search box*@
-                        <li>
-                            <div class="col-sm-3 col-md-12">
-                                <form class="navbar-form" role="search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        @*<li>
+                                <div class="col-sm-3 col-md-12">
+                                    <form class="navbar-form" role="search">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
+                                    </form>
+                                </div>
+                            </li>*@
 
                     </ul>
 
@@ -125,25 +135,25 @@
                 else
                 {
                     <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Product" asp-action="Index">Products</a></li>
-                        <li><a asp-area="" asp-controller="Feedback" asp-action="Index">Feedback</a></li>
+                        <li><a asp-area="" asp-controller="Product" asp-action="Index">PRODUCTS</a></li>
+                        <li><a asp-area="" asp-controller="Feedback" asp-action="Index">FEEDBACK</a></li>
 
-                        <li>
-                            <div class="col-sm-3 col-md-12">
-                                <form class="navbar-form" role="search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        @*<li>
+                                <div class="col-sm-3 col-md-12">
+                                    <form class="navbar-form" role="search">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
+                                    </form>
+                                </div>
+                            </li>*@
 
                         <li>
                             <a href="#" onclick="showInPopup('@Url.Action("CartProducts","Cart")')">
-                                Cart
+                                CART
                                 <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
                             </a>
                         </li>
@@ -157,7 +167,7 @@
                 {
                     <form asp-area="" asp-controller="Account" asp-action="LogOut" method="post" id="logoutForm" navbar-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a></li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">LOG OUT</a></li>
                         </ul>
 
                     </form>
@@ -165,8 +175,8 @@
                 else
                 {
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Register">REGISTER</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Login">LOGIN</a></li>
                     </ul>
 
                 }
@@ -174,112 +184,127 @@
 
         </div>
     </nav>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                <li>
+                    <div class="col-sm-3 col-md-12">
+                        <form class="navbar-form" role="search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                    <li><h3 style="color:white; font-style:italic; text-align:right;">KHAREED LO</h3></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Modal -->
-    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="exampleModalLabel">SHOPPING CART</h2>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <a asp-area="" asp-controller="Cart" asp-action="CheckOutPage" type="button" class="btn btn-primary">Checkout</a>
+        <!-- ADD TO CART MODAL -->
+        <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLabel">CART</h2>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <a asp-area="" asp-controller="Cart" asp-action="CheckOutPage" type="button" class="btn btn-primary">Checkout</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <partial name="_CookieConsentPartial" />
+        <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+        </div>
 
-
-    </div>
-
-
-
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+            <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+            </script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
+            </script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+            <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        </environment>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
-        <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-        <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    </environment>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-    <script>
+        @RenderSection("Scripts", required: false)
 
-    </script>
+        <!---FOOTER-->
+        <footer>
+            <div style="background-color:#0c2f44;">
+                <div class="container h-1">
+                    <div class="row py-1 d-flex glyphicon-align-center">
+                        <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+                            <h6 class="mb-0" style="color:white;">Get connected with us on social media!</h6>
+                        </div>
+                        <div class="flex-center">
+                            <!--Facebook-->
+                            <a class="fb-ic">
+                                <i class="fab fa-facebook-f fa-lg white-text mr-4"></i>
+                            </a>
 
-    <footer>
-        <div style="background-color:#0c2f44;">
-            <div class="container h-1">
-                <div class="row py-1 d-flex glyphicon-align-center">
-                    <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
-                        <h6 class="mb-0" style="color:white;">Get connected with us on social media!</h6>
+                            <!--Twitter-->
+                            <a class="fb-ic">
+                                <i class="fab fa-twitter fa-lg white-text mr-4"></i>
+                            </a>
+
+                            <!--Google-->
+                            <a class="gplus-ic">
+                                <i class="fab fa-google-plus-g fa-lg white-text mr-4"></i>
+                            </a>
+
+                            <!--LinkedIn-->
+                            <a class="li-ic">
+                                <i class="fab fa-linkedin-in fa-lg white-text mr-4"></i>
+                            </a>
+
+                            <!--Instagram-->
+                            <a class="ins-ic">
+                                <i class="fab fa-instagram fa-lg white-text mr-4"></i>
+                            </a>
+
+                            <!--Pinterest-->
+                            <a class="pin-ic">
+                                <i class="fab fa-pinterest fa-lg white-text mr-4"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="flex-center">
-                        <!--Facebook-->
-                        <a class="fb-ic">
-                            <i class="fab fa-facebook-f fa-lg white-text mr-4"></i>
-                        </a>
+                    <div style="color:white">
 
-                        <!--Twitter-->
-                        <a class="fb-ic">
-                            <i class="fab fa-twitter fa-lg white-text mr-4"></i>
-                        </a>
-
-                        <!--Google-->
-                        <a class="gplus-ic">
-                            <i class="fab fa-google-plus-g fa-lg white-text mr-4"></i>
-                        </a>
-
-                        <!--LinkedIn-->
-                        <a class="li-ic">
-                            <i class="fab fa-linkedin-in fa-lg white-text mr-4"></i>
-                        </a>
-
-                        <!--Instagram-->
-                        <a class="ins-ic">
-                            <i class="fab fa-instagram fa-lg white-text mr-4"></i>
-                        </a>
-
-                        <!--Pinterest-->
-                        <a class="pin-ic">
-                            <i class="fab fa-pinterest fa-lg white-text mr-4"></i>
-                        </a>
                     </div>
-                </div>
-                <div style="color:white">
-                    
                 </div>
             </div>
-        </div>
-        <p>&copy; @DateTime.Now.Year - KhareedLo</p>
-    </footer>
+            <p>&copy; @DateTime.Now.Year - KhareedLo</p>
+        </footer>
 </body>
 </html>

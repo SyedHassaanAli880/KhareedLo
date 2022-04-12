@@ -6,21 +6,22 @@ using System.Linq;
 using KhareedLo.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using KhareedLo.Auth;
+using KhareedLo.Repositories.Interfaces;
 
 namespace KhareedLo.Controllers
 {
     [Authorize]
     public class FeedbackController : Controller
     {
-        private readonly IFeedbackRepository _feedbackrepository;
+        private readonly IGenericRepository<Feedbacks> _genRep;
 
         private UserManager<ApplicationUser> _userManager;
 
-        public FeedbackController(IFeedbackRepository feedbackrepository, UserManager<ApplicationUser> um)
+        public FeedbackController(UserManager<ApplicationUser> um, IGenericRepository<Feedbacks> genRep)
         {
-            _feedbackrepository = feedbackrepository;
-
             _userManager = um;
+
+            _genRep = genRep;
         }
         public IActionResult Index()
         {
@@ -44,7 +45,9 @@ namespace KhareedLo.Controllers
                     ContactMe = feedback.ContactMe
                 };
 
-                _feedbackrepository.AddFeedback(f);
+                //_feedbackrepository.AddFeedback(f);
+
+                _genRep.Insert(f);
 
                 return RedirectToAction("FeedbackComplete");
             }
@@ -59,7 +62,9 @@ namespace KhareedLo.Controllers
         [HttpGet]
         public IActionResult DisplayFeedback()
         {
-            var fbss = _feedbackrepository.GetAllFeedbacks().OrderBy(p => p.Name);
+            var fbss = _genRep.GetAll().OrderBy(p => p.Name);
+
+            //_feedbackrepository.GetAllFeedbacks().OrderBy(p => p.Name);
 
             var obj = new DisplayFeedbackViewModel()
             {

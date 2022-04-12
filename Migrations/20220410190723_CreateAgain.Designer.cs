@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KhareedLo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220227091113_EI")]
-    partial class EI
+    [Migration("20220410190723_CreateAgain")]
+    partial class CreateAgain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using KhareedLo.Models;
 using KhareedLo.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -78,6 +77,11 @@ namespace KhareedLo.Repositories
             context.SaveChanges();
 
             return entityToUpdate;
+        }
+
+        public List<Product> GetAllProductsById(List<int> IDs)
+        {
+            return context.Products.Where(p => IDs.Contains(p.Id)).ToList();
         }
     }
 }

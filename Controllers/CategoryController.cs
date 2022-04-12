@@ -13,25 +13,21 @@ namespace KhareedLo.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _categoryRepository;
-
-        private readonly IProductRepository _productRepository;
-
         private readonly IGenericRepository<CategoryModel> _GRepository;
+
+        private readonly IGenericRepository<Product> _PGRepository;
 
         private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly AppDbContext _db;
 
-        public CategoryController(ICategoryRepository categoryRepository, UserManager<ApplicationUser> um, AppDbContext apdb, IProductRepository obj, IGenericRepository<CategoryModel> GG)
+        public CategoryController(UserManager<ApplicationUser> um, AppDbContext apdb, IProductRepository obj, IGenericRepository<CategoryModel> GG, IGenericRepository<Product> prodRep)
         {
-            _categoryRepository = categoryRepository;
-
             _userManager = um;
 
             _db = apdb;
 
-            _productRepository = obj;
+            _PGRepository = prodRep;
 
             _GRepository = GG;
         }
@@ -39,8 +35,6 @@ namespace KhareedLo.Controllers
         public IActionResult DisplayCategories()
         {
             var ccategories = _GRepository.GetAll();
-
-                //await _categoryRepository.GetAllCategories();
 
             var obj = new CategoryViewModel()
             {
@@ -64,10 +58,9 @@ namespace KhareedLo.Controllers
                 if (ModelState.IsValid)
                 {
                     p.Name = vari.Name;
+                    
                     p.IsActive = vari.IsActive;
                     
-                    //_categoryRepository.AddCategory(p);
-
                     _GRepository.Insert(p);
 
                     //success
@@ -83,7 +76,6 @@ namespace KhareedLo.Controllers
         public IActionResult DeleteCategory(int ID)
         {
             bool result = _GRepository.Delete(ID);
-                //= _categoryRepository.DDeleteCategory(ID);
 
             if (result) //success
             {
@@ -100,7 +92,6 @@ namespace KhareedLo.Controllers
         public IActionResult EditCategory(int id)
         {
             var category = _GRepository.GetById(id);
-                //_categoryRepository.GGetCategoryById(id);
 
             if (category == null) return RedirectToAction("DisplayCategories", "Category");
 
@@ -117,6 +108,7 @@ namespace KhareedLo.Controllers
                 if (categ == null) return NotFound();
 
                     categ.Name = vari.Name;
+                
                     categ.IsActive = vari.IsActive;
 
                     _db.SaveChanges();
@@ -134,7 +126,7 @@ namespace KhareedLo.Controllers
         {
             List<ProductViewModel> model = new List<ProductViewModel>();
 
-            var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
+            var pproducts = _PGRepository.GetAll().OrderBy(p => p.Name);
 
             foreach (var b in pproducts)
             {
@@ -159,7 +151,7 @@ namespace KhareedLo.Controllers
         {
             List<ProductViewModel> model = new List<ProductViewModel>();
 
-            var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
+            var pproducts = _PGRepository.GetAll().OrderBy(p => p.Name);
 
             foreach (var b in pproducts)
             {
@@ -185,7 +177,7 @@ namespace KhareedLo.Controllers
 
             List<ProductViewModel> model = new List<ProductViewModel>();
 
-            var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
+            var pproducts = _PGRepository.GetAll().OrderBy(p => p.Name);
 
             foreach (var b in pproducts)
             {
@@ -211,7 +203,7 @@ namespace KhareedLo.Controllers
 
             List<ProductViewModel> model = new List<ProductViewModel>();
 
-            var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
+            var pproducts = _PGRepository.GetAll().OrderBy(p => p.Name);
 
             foreach (var b in pproducts)
             {
@@ -236,7 +228,7 @@ namespace KhareedLo.Controllers
         {
             List<ProductViewModel> model = new List<ProductViewModel>();
 
-            var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
+            var pproducts = _PGRepository.GetAll().OrderBy(p => p.Name);
 
             foreach (var b in pproducts)
             {
@@ -261,7 +253,7 @@ namespace KhareedLo.Controllers
         {
             List<ProductViewModel> model = new List<ProductViewModel>();
 
-            var pproducts = _productRepository.GetAllProducts().OrderBy(p => p.Name);
+            var pproducts = _PGRepository.GetAll().OrderBy(p => p.Name);
 
             foreach (var b in pproducts)
             {

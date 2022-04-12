@@ -6,17 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using KhareedLo.Repositories.Interfaces;
+using KhareedLo.Repositories;
 
 namespace KhareedLo.Controllers
 {
     public class CartController : Controller
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IGenericRepository<Product> _genericRep;
 
         private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly AppDbContext _db;
+        public CartController(IGenericRepository<Product> _grp, UserManager<ApplicationUser> um, AppDbContext apdb)
+        {
+            _genericRep = _grp;
 
+            _userManager = um;
+
+            _db = apdb;
+        }
 
         [HttpGet]
         public IActionResult CartProducts()
@@ -31,21 +40,12 @@ namespace KhareedLo.Controllers
 
                 model.CartProductIDs = prodIDs.Select(x => int.Parse(x)).ToList();
 
-                model.CartProducts = _productRepository.GetAllProductsByID(model.CartProductIDs);
+                model.CartProducts = _genericRep.GetAllProductsById(model.CartProductIDs);
 
-                //model.CartProducts = _productRepository.GetAllProducts
+                //model.CartProducts = _genericRep.GetAllProducts
             }
 
             return View(model);
-        }
-
-        public CartController(IProductRepository productRepository, UserManager<ApplicationUser> um, AppDbContext apdb)
-        {
-            _productRepository = productRepository;
-
-            _userManager = um;
-
-            _db = apdb;
         }
 
         List<int> obj = new List<int>();
@@ -55,7 +55,7 @@ namespace KhareedLo.Controllers
         {
             obj.Add(ID);
 
-            var product = _productRepository.GetProductById(ID);
+            var product = _genericRep.GetById(ID);
 
             AddToCart adt = new AddToCart()
             {
@@ -68,7 +68,7 @@ namespace KhareedLo.Controllers
                 //ImagePhoto = uniqueFileName
             };
 
-            //int x = _productRepository.AddProduct(adt);
+            //int x = _genericRep.AddProduct(adt);
 
             //string key = "CartProducts";
 

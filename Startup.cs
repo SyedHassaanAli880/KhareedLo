@@ -91,11 +91,6 @@ namespace KhareedLo
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-            //var json = JsonConvert.SerializeObject(harry,
-            //        new JsonSerializerSettings()
-            //        {
-            //            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            //        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -49,7 +49,6 @@ namespace KhareedLo.Controllers
             return new ChallengeResult(provider, properties);
         }
 
-
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
@@ -115,7 +114,6 @@ namespace KhareedLo.Controllers
             return View("Login", LoginViewmodel);
         }
 
-
         [HttpGet]
         public IActionResult Login()
         {
@@ -151,7 +149,6 @@ namespace KhareedLo.Controllers
 
             return View(loginviewModel);
         }
-
 
         [HttpGet]
         public IActionResult Register()
